@@ -1,0 +1,67 @@
+SMART原则
+======
+1，明确的Specific
+2，可衡量的Measurable
+3，可达到的Attainable
+4，目标相关的Relevant
+5，时间限制的Time-based
+
+
+尝试手敲代码（模仿），增加对代码的理解
+======
+
+1，明确的Specific
+  尝试手敲代码（模仿），增加对代码的理解
+
+2，可衡量的Measurable
+  按照代码的调用层级，依次仿写代码；
+  记录仿写每个代码文件需要的用时；
+    yolo_video.py  -- 76L / 20Min
+    yolo.py  --  211L / 60Min
+    yolo3/model.py  -- 346L / 180Min
+    yolo3/utils.py  -- 106L / 28Min
+    convert.py  -- 226L / 63Min
+    voc_annotation.py  -- 32L / 12Min
+    coco_annotation.py  -- 51L / 10Min
+    kmeans.py  -- 97L / 23Min
+    train.py  -- 169L / 55Min
+
+3，可达到的Attainable
+  可以达到
+
+4，目标相关的Relevant
+  熟悉YOLO的一种手段
+
+5，时间限制的Time-based
+  初步预计8小时
+  统计：1314L / 451Min = 2.91L/Min
+
+
+看跟YOLO相关的博客文档
+======
+1，明确的Specific
+  看跟YOLO相关的博客文档，弄清YOLO检测原理，样本制作，模型训练等步骤。
+
+2，可衡量的Measurable
+  可以通过 印象笔记 记录看过的博客文档；
+  可以通过 github代码网址 来搜索相关的文档分享（这些文档一般是作者使用github上的代码后分享出来的调试心得，遇到的问题等）；
+  根据文章的页数（定位到文章的开头，按PageDown按键，看有几页），定时阅读；
+------
+【AI实战】动手训练自己的目标检测模型（YOLO篇） -- 8P / 12Min
+【AI实战】手把手教你训练自己的目标检测模型（SSD篇）  -- 18P / 25Min
+大话目标检测经典模型（RCNN、Fast RCNN、Faster RCNN）  -- 16P / 40Min  -- 不错
+大话目标检测经典模型：Mark R-CNN  -- 10P / 16Min
+Keras/Tensorflow+python+yolo3训练自己的数据集  -- 18P / 25Min  -- 公式还有解释，不错
+Yolo系列其一：Yolo_v1  -- 11P / 
+YOLO v2（Darknet）训练自定义数据集使用记录  -- 11P / 
+  
+
+3，可达到的Attainable
+  拆分后的任务很明确，可以达到。
+  
+4，目标相关的Relevant
+  熟悉YOLO的一种必要手段
+
+5，时间限制的Time-based
+  可以阅读16篇左右，预计耗时 16 x 20Min = 320Min
+
