@@ -1,0 +1,39 @@
+Author: lichen_zeng@sina.cn
+Date: 20181029
+Subject: 阅读YOLO相关的博客
+
+
+1. 具体的Specific
+  阅读YOLO v1/v2/v3相关的博客，以便快速了解其算法的原理、调试步骤、训练步骤、使用等
+
+2. 可衡量的Measurable
+  YOLO原著文档或者其翻译版本；
+  阅读16篇YOLO相关的博客，并记录每篇博客的页数和阅读时间；
+  引申阅读检查算法相关的文章；
+------
+KERAS-YOLOV3的代码走读  -- 14P / 59Min  -- 代码分析较多，看得有点慢
+YOLOv3：An Incremental Improvement全文翻译  -- 13P / 26Min
+PASCAL VOC数据集分析  -- 5P / 11Min
+KERAS-YOLOV3的数据增强  -- 3P / 9Min
+目标检测 YOLO v3 训练 人脸检测模型 -- 11P / 21Min
+YOLOv2 论文笔记  -- 19P / 39Min  -- 没有看进去，有点难，有干扰
+基于KITTI数据集的KERAS-YOLOV3实践  -- 7P / 9Min
+论文阅读：You Only Look Once: Unified, Real-Time Object Detection  -- 15P / 
+【AI实战】动手训练自己的目标检测模型（YOLO篇） -- 8P / 12Min
+【AI实战】手把手教你训练自己的目标检测模型（SSD篇）  -- 18P / 25Min
+大话目标检测经典模型（RCNN、Fast RCNN、Faster RCNN）  -- 16P / 40Min  -- 不错
+大话目标检测经典模型：Mark R-CNN  -- 10P / 16Min
+Keras/Tensorflow+python+yolo3训练自己的数据集  -- 18P / 25Min  -- 公式还有解释，不错
+Yolo系列其一：Yolo_v1  -- 11P / 25Min
+YOLO v2（Darknet）训练自定义数据集使用记录  -- 11P / 9Min
+YOLOv3: 训练自己的数据  -- 27P / 35Min
+  
+3. 可达到的Attainable
+  目标细分后，清晰明了，可以达到
+
+4. 目标相关的Relevant
+  是熟悉YOLO算法的不二选择
+
+5. 时间限制的Time-based
+  阅读16篇YOLO相关的博客，耗时16 x 20Min = 320Min
+

@@ -1,0 +1,10 @@
+Author: lichen_zeng@sina.cn
+Date: 20181029
+Subject: SMART原则
+
+
+1. 具体的Specific
+2. 可衡量的Measurable
+3. 可达到的Attainable
+4. 目标相关的Relevant
+5. 时间限制的Time-based
