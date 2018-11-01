@@ -1,0 +1,163 @@
+Author: lichen_zeng@sina.cn
+Date: 20181031
+Subject: 阅读RCNN相关的博客
+
+
+1. 具体的Specific
+  阅读RCNN, Fast RCNN, Faster RCNN相关的博客，以便快速了解其算法的原理、调试步骤、训练步骤、使用等
+
+2. 可衡量的Measurable
+  RCNN原著文档或者其翻译版本；
+  阅读6篇RCNN相关的博客，并记录每篇博客的页数和阅读时间；
+  引申阅读检查算法相关的文章；
+------
+faster-RCNN算法原理详解  -- 28P / 55Min  -- （相当于3篇文章）非常系统，不过没有看太懂，建议重新再看看
+不能再详细！！！手把手教你用Faster-RCNN训练自己的数据集  -- 15P / 15Min
+faster-RCNN算法原理详解  -- 28P / 2h5min  -- 精细阅读，读书笔记如下
+
+
+3. 可达到的Attainable
+  目标细分后，清晰明了，可以达到
+
+4. 目标相关的Relevant
+  是熟悉RCNN相关算法的不二选择
+
+5. 时间限制的Time-based
+  阅读6篇YOLO相关的博客，耗时6 x 20Min = 120Min
+
+
+读书笔记
+===============
+
+## Faster RCNN其实可以分为4个主要内容：
+
+  1. Conv layers
+    作为一种CNN网络目标检测方法，Faster RCNN首先使用一组基础的conv+relu+pooling层提取image的feature maps。该feature maps被共享用于后续RPN层和全连接层。
+
+  2. Region Proposal Networks(RPN)
+    RPN网络用于生成region proposals。该层通过softmax判断anchors属于foreground或者background，再利用bounding box regression修正anchors获得精确的proposals。
+
+  3. RoI Pooling
+    该层收集输入的feature maps和proposals，综合这些信息后提取proposal feature maps，送入后续全连接层判定目标类别。
+
+  4. Classification
+    利用proposal feature maps计算proposal的类别，同时再次bounding box regression获得检测框最终的精确位置。
+
+
+
+## Faster RCNN, Ross B. Girshick, 2016 
+
+
+
+## 为什么Faster RCNN在综合性能有较大提高，检测速度方面尤为明显
+
+  在结构上，特征提取(Feature extraction), Proposal提取, Bounding box regression(rect refine), Classification都整合到了一个网络中。
+
+
+
+## Python版本中VGG16模型中的Faster RCNN网络结构
+
+  1. 该网络对于一副任意大小PxQ的图像，首先缩放至固定大小MxN，然后将MxN图像送入网络；
+  2. 而Conv layers中包含了13个conv层+13个relu层+4个pooling层；
+  3. RPN网络首先经过3x3卷积，再分别生成foreground anchors与bounding box regression偏移量，然后计算出proposals；
+  4. 而RoI Pooling层则利用proposals从feature maps中提取proposal feature maps
+  5. 将proposal feature maps送入后续全连接和softmax网络作classification（即分类proposal到底是什么object）。
+
+
+
+### Conv layers
+  1. 所有的conv层都是：kernel_size=3，pad=1
+  2. 所有的pooling层都是：kernel_size=2，stride=2
+
+一个MxN大小的矩阵经过Conv layers固定变为(M/16)x(N/16)  # 2^4 = 16
+
+
+
+### Region Proposal Networks(RPN)
+
+  1. 经典的检测方法生成检测框都非常耗时，如RCNN使用SS(Selective Search)方法生成检测框。
+  2. Faster RCNN则抛弃了传统的滑动窗口和SS方法，直接使用RPN生成检测框，这也是Faster RCNN的巨大优势，能极大提升检测框的生成速度
+  3. RPN网络的具体结构
+    1）可以看到RPN网络实际分为2条线，上面一条通过softmax分类anchors获得foreground和background（检测目标是foreground）
+    2）下面一条用于计算对于anchors的bounding box regression偏移量，以获得精确的proposal。
+    3）而最后的Proposal层则负责综合foreground anchors和bounding box regression偏移量获取proposals，同时剔除太小和超出边界的proposals。
+    4）其实整个网络到了Proposal Layer这里，就完成了相当于目标定位的功能。
+
+
+
+### Anchors锚点
+
+  1. Faster RCNN有9个矩形共有3种形状，长宽比为大约为：width:height = [1:1, 1:2, 2:1]三种
+  2. 实际上通过anchors就引入了检测中常用到的多尺度方法
+  3. 在python demo中，会把任意大小的输入图像reshape成800x600（即图2中的M=800，N=600）。再回头来看anchors的大小，anchors中长宽1:2中最大为352x704，长宽2:1中最大736x384，基本是cover了800x600的各个尺度和形状。
+
+
+
+### Proposal Layer
+
+  1. Proposal Layer负责综合所有[dx(A)，dy(A)，dw(A)，dh(A)]变换量和foreground anchors，计算出精准的proposal，送入后续RoI Pooling Layer
+
+
+
+### RoI pooling
+
+  RoI Pooling层则负责收集proposal，并计算出proposal feature maps，送入后续网络。从图3中可以看到Rol pooling层有2个输入：
+    1. 原始的feature maps
+    2. RPN输出的proposal boxes（大小各不相同）
+
+
+
+### 为何需要RoI Pooling
+  1. 采用Crop和Warp，可以看到无论采取那种办法都不好，要么crop后破坏了图像的完整结构，要么warp破坏了图像原始形状信息。
+  2. RPN网络生成的proposals的方法：对foreground anchors进行bound box regression，那么这样获得的proposals也是大小形状各不相同，即也存在上述问题
+  3. RoI Pooling原理
+	RoI Pooling layer forward过程：在之前有明确提到：proposal=[x1, y1, x2, y2]是对应MxN尺度的，所以首先使用spatial_scale参数将其映射回MxN大小的feature maps尺度（这里来回多次映射，是有点绕）；之后将每个proposal水平和竖直都分为7份，对每一份都进行max pooling处理。这样处理后，即使大小不同的proposal，输出结果都是7x7大小，实现了fixed-length output。
+
+
+
+### Classification
+
+  1. Classification部分利用已经获得的proposal feature maps，通过full connect层与softmax计算每个proposal具体属于那个类别（如人，车，电视等），输出cls_prob概率向量；
+  2. 同时再次利用bounding box regression获得每个proposal的位置偏移量bbox_pred，用于回归更加精确的目标检测框。
+
+
+
+## Faster RCNN训练
+
+  Faster CNN的训练，是在已经训练好的model（如VGG_CNN_M_1024，VGG，ZF）的基础上继续进行训练。实际中训练过程分为6个步骤：
+
+  1. 在已经训练好的model上，训练RPN网络，对应stage1_rpn_train.pt
+  2. 利用步骤1中训练好的RPN网络，收集proposals，对应rpn_test.pt
+  3. 第一次训练Fast RCNN网络，对应stage1_fast_rcnn_train.pt
+  4. 第二训练RPN网络，对应stage2_rpn_train.pt
+  5. 再次利用步骤4中训练好的RPN网络，收集proposals，对应rpn_test.pt
+  6. 第二次训练Fast RCNN网络，对应stage2_fast_rcnn_train.pt
+
+
+
+### 训练RPN网络
+  由于在实际过程中，Ncls和Nreg差距过大，用参数λ平衡二者（如Ncls=256，Nreg=2400时设置λ=10），使总的网络Loss计算过程中能够均匀考虑2种Loss。这里比较重要是Lreg使用的soomth L1 loss，
+
+  1. 对于rpn_loss_cls，输入的rpn_cls_scors_reshape和rpn_labels分别对应p与p*，Ncls参数隐含在p与p*的blob的大小中
+  2. 对于rpn_loss_bbox，输入的rpn_bbox_pred和rpn_bbox_targets分别对应t于t*，rpn_bbox_inside_weigths对应p*，rpn_bbox_outside_weights对应λ，Nreg同样隐含在blob大小中
+
+  特别需要注意的是，在训练和检测阶段生成和存储anchors的顺序完全一样，这样训练结果才能被用于检测！
+
+
+
+### 通过训练好的RPN网络收集proposals
+
+  在该步骤中，利用之前的RPN网络，获取proposal rois，同时获取foreground softmax probability，如图18，然后将获取的信息保存在python pickle文件中。该网络本质上和检测中的RPN网络一样，没有什么区别。
+
+
+
+### 训练Fast RCNN网络
+
+  读取之前保存的pickle文件，获取proposals(rois)与foreground probability(scores)，从data层输入网络，然后：
+
+  1. 将提取的proposals作为rois传入网络
+  2. 将foreground probability作为bbox_inside_weights传入网络
+  3. 通过caffe blob大小对比，计算出bbox_outside_weights（即λ）
+
+  这样就可以训练最后的识别softmax与最终的bounding regression了
+
