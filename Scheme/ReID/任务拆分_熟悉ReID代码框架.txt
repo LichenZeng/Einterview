@@ -1,0 +1,61 @@
+Author: lichen_zeng@sina.cn
+Date: 20181105
+Subject: 任务拆分，熟悉ReID代码框架
+
+
+# ReID用到的技术
+
+度量学习，
+LDA，
+QDA，
+XQDA，
+eXQDA，
+
+马氏距离，
+欧氏距离，
+余弦相似度距离，
+M矩阵，
+mAP，公式
+ROC，
+查准率，查全率，
+MTE，多枝树
+测试集 没有标签，提取特征，
+％10作为测试集test，％90训练集train
+从％90的训练集train中扣取％5作为验证集val，因为模型的原因 需要验证集
+分类模型，残差网，密集网
+迁移学习，用的ImageNet的权重，
+LSR，1000类，one-hot, 正样本：0.9的置信度，负样本：0.1/999的置信度
+标准规约，
+学习率——batch norm——LSR——规约——epoch——dropout——top
+数据集详情和划分；
+本次任务的数据集划分（不能以任何形式使用测试集）
+模型训练，
+特征融合，
+
+LSR(Label smooth regularization)
+
+HDLF(Hierarchical Deep Learning Feature)
+
+ReID公开数据集：
+ILIDS-VID, PRID2011, Market-1501
+
+顶级会议：
+CVPR, ICCV, ECCV, AAAI, IJCAI, ACMMM
+
+
+特征设计：
+LOMO: 26960, GOG: 27622, HGD: 44450
+
+KISSME(Keep It Simple and Straightforward MEtric)
+
+Mahalanobis(马哈拉诺比斯度量)
+
+SVM,
+
+RDC(相对距离比较)
+
+PCA
+
+CMC(累计匹配特征)
+
+Rank-1

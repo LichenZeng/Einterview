@@ -1,0 +1,21 @@
+Author: lichen_zeng@sina.cn
+Date: 20181105
+Subject: 熟悉ReID代码框架
+
+
+1. 具体的Specific
+
+2. 可衡量的Measurable
+
+3. 可达到的Attainable
+  目标细分后，清晰明了，可以达到
+
+4. 目标相关的Relevant
+  是熟悉ReID相关算法的不二选择
+
+5. 时间限制的Time-based
+
+
+读书笔记
+===============
+
