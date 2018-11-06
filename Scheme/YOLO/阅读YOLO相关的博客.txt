@@ -29,6 +29,7 @@ YOLO v2（Darknet）训练自定义数据集使用记录  -- 11P / 9Min
 YOLOv3: 训练自己的数据  -- 27P / 35Min
 目标检测（九）--YOLO v1,v2,v3  -- 26P / 
 【目标检测】yolov3为什么比yolov2好这么多
+YOLO v3网络结构分析(https://blog.csdn.net/qq_37541097/article/details/81214953)
 
 3. 可达到的Attainable
   目标细分后，清晰明了，可以达到
@@ -70,3 +71,8 @@ YOLOv3: 训练自己的数据  -- 27P / 35Min
 
   而在YOLOv3中，作者又改用相对于原图的大小来定义anchor，anchor的大小为（0x0，input_w x input_h]。
 
+
+## YOLO v3作者的Paper输入的是 256x256，所以最后一层的Feature map大小为 8x8，如果输入 416x416，则最后一层Feature map大小为 13x13，即32倍
+
+  1. 卷积的strides默认为（1，1），padding默认为same，当strides为（2，2）时padding为valid
+  2. 看完上图应该就能自己搭建出Darknet-53的网络结构了，上图是以输入图像256 x 256进行预训练来进行介绍的，常用的尺寸是416 x 416，都是32的倍数。下面我们再来分析下YOLOv3的特征提取器，看看究竟是在哪几层Features上做的预测。
